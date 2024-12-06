@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .cart-container {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .cart-container h2 {
+            margin-top: 0;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        .cart-item .details {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+        .cart-item .details h3 {
+            margin: 0;
+            font-size: 14px;
+        }
+        .cart-item .details p {
+            margin: 0;
+            font-size: 12px;
+        }
+        .cart-total {
+            text-align: right;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .cart-total button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Tu Carrito</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">
+            Total: $<span id="total">0.00</span>
+            <button onclick="checkout()">Pagar</button>
+        </div>
+    </div>
+
+    <script>
+        function loadCart() {
+            const cartItem = JSON.parse(localStorage.getItem('cartItem'));
+            if (cartItem) {
+                const cartItems = document.getElementById('cart-items');
+                cartItems.innerHTML = `
+                    <div class="cart-item">
+                        <img src="${cartItem.image}" alt="${cartItem.name}">
+                        <div class="details">
+                            <h3>${cartItem.name}</h3>
+                            <p>$${cartItem.price.toLocaleString()}</p>
+                        </div>
+                        <div class="quantity">
+                            <span>${cartItem.quantity}</span>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('total').textContent = cartItem.price.toLocaleString();
+            }
+        }
+
+        function checkout() {
+            alert('Gracias por tu compra!');
+            localStorage.removeItem('cartItem');
+            window.location.href = 'productos.html';
+        }
+
+        loadCart();
+    </script>
+</body>
+</html>
